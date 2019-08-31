@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5EE0D2EA-CD38-40D7-B73D-51C8E3C1B6E3}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ArchitectureExample</RootNamespace>
-    <AssemblyName>ArchitectureExample</AssemblyName>
+    <ProjectGuid>{49F8A405-2D40-4052-9931-5723715C683F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DependencyLoader</RootNamespace>
+    <AssemblyName>DependencyLoader</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,29 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="NativeCallerProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DependencyLoader\DependencyLoader.csproj">
-      <Project>{49f8a405-2d40-4052-9931-5723715c683f}</Project>
-      <Name>DependencyLoader</Name>
+    <ProjectReference Include="..\MixedAssembly\MixedAssembly.vcxproj">
+      <Project>{c42224c2-880e-418b-9acd-a2c94e95cd9f}</Project>
+      <Name>MixedAssembly</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>mkdir $(TargetDir)Dependencies\Win32
-xcopy $(SolutionDir)Win32\$(ConfigurationName)\NativeCallee.dll $(TargetDir)Dependencies\Win32 /Y
-xcopy $(SolutionDir)Win32\$(ConfigurationName)\MixedAssembly.dll $(TargetDir)Dependencies\Win32 /Y
-mkdir $(TargetDir)Dependencies\x64
-xcopy $(SolutionDir)x64\$(ConfigurationName)\NativeCallee.dll $(TargetDir)Dependencies\x64 /Y
-xcopy $(SolutionDir)x64\$(ConfigurationName)\MixedAssembly.dll $(TargetDir)Dependencies\x64 /Y</PostBuildEvent>
-  </PropertyGroup>
 </Project>
